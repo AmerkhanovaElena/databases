@@ -1,71 +1,71 @@
 --1. INSERT
-	--1. Без указания списка полей
+	--1. ГЃГҐГ§ ГіГЄГ Г§Г Г­ГЁГї Г±ГЇГЁГ±ГЄГ  ГЇГ®Г«ГҐГ©
 	INSERT INTO salon 
 	VALUES
 		('Komsomolskaya St.', '89318549302', 'Krasilov Petr', '89279587764');
 
---2. С указанием списка полей
+--2. Г‘ ГіГЄГ Г§Г Г­ГЁГҐГ¬ Г±ГЇГЁГ±ГЄГ  ГЇГ®Г«ГҐГ©
 	INSERT INTO hairdresser
 		(id_salon, last_name, first_name, birth_date, phone_number)
 	VALUES
 		(1, 'Ivanov', 'Ivan', '1990-01-12', '89311234567');
 
---3. С чтением значения из другой таблицы
+--3. Г‘ Г·ГІГҐГ­ГЁГҐГ¬ Г§Г­Г Г·ГҐГ­ГЁГї ГЁГ§ Г¤Г°ГіГЈГ®Г© ГІГ ГЎГ«ГЁГ¶Г»
 	INSERT INTO done (total_cost) SELECT cost FROM service;
 	SELECT * FROM done;
 
 --2. DELETE
-	--1. Всех записей
+	--1. Г‚Г±ГҐГµ Г§Г ГЇГЁГ±ГҐГ©
 		DELETE FROM done;
-	--2. По условию
+	--2. ГЏГ® ГіГ±Г«Г®ГўГЁГѕ
 		DELETE FROM service WHERE name = 'hair styling';
-	--3. Очистить таблицу
+	--3. ГЋГ·ГЁГ±ГІГЁГІГј ГІГ ГЎГ«ГЁГ¶Гі
 		TRUNCATE TABLE client;
 
 --3. UPDATE
-	--1. Всех записей
+	--1. Г‚Г±ГҐГµ Г§Г ГЇГЁГ±ГҐГ©
 		UPDATE client SET regular_customer = 0;
-	--2. По условию обновляя один атрибут
+	--2. ГЏГ® ГіГ±Г«Г®ГўГЁГѕ Г®ГЎГ­Г®ГўГ«ГїГї Г®Г¤ГЁГ­ Г ГІГ°ГЁГЎГіГІ
 		UPDATE service
 		SET materials = NULL
 		WHERE name = 'haircut';
-	--3. По условию обновляя несколько атрибутов
+	--3. ГЏГ® ГіГ±Г«Г®ГўГЁГѕ Г®ГЎГ­Г®ГўГ«ГїГї Г­ГҐГ±ГЄГ®Г«ГјГЄГ® Г ГІГ°ГЁГЎГіГІГ®Гў
 		UPDATE service
 		SET materials = CONCAT(materials, ' hair dye'), cost = cost + 400
 		WHERE name LIKE '%dying%';
 
 --4. SELECT
-	--1. С определенным набором извлекаемых атрибутов
+	--1. Г‘ Г®ГЇГ°ГҐГ¤ГҐГ«ГҐГ­Г­Г»Г¬ Г­Г ГЎГ®Г°Г®Г¬ ГЁГ§ГўГ«ГҐГЄГ ГҐГ¬Г»Гµ Г ГІГ°ГЁГЎГіГІГ®Гў
 		SELECT first_name, last_name FROM hairdresser;
-	--2. Со всеми атрибутами
+	--2. Г‘Г® ГўГ±ГҐГ¬ГЁ Г ГІГ°ГЁГЎГіГІГ Г¬ГЁ
 		SELECT * FROM salon;
-	--3. С условием по атрибуту
+	--3. Г‘ ГіГ±Г«Г®ГўГЁГҐГ¬ ГЇГ® Г ГІГ°ГЁГЎГіГІГі
 		SELECT * FROM client WHERE regular_customer = 1;
 
 --5. SELECT ORDER BY + TOP (LIMIT)
-    --1. С сортировкой по возрастанию ASC + ограничение вывода количества записей
+    --1. Г‘ Г±Г®Г°ГІГЁГ°Г®ГўГЄГ®Г© ГЇГ® ГўГ®Г§Г°Г Г±ГІГ Г­ГЁГѕ ASC + Г®ГЈГ°Г Г­ГЁГ·ГҐГ­ГЁГҐ ГўГ»ГўГ®Г¤Г  ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ  Г§Г ГЇГЁГ±ГҐГ©
 		SELECT TOP 3 name, cost
 		FROM service
 		ORDER BY cost ASC;
-    --2. С сортировкой по убыванию DESC
+    --2. Г‘ Г±Г®Г°ГІГЁГ°Г®ГўГЄГ®Г© ГЇГ® ГіГЎГ»ГўГ Г­ГЁГѕ DESC
 		SELECT name, cost
 		FROM service
 		ORDER BY cost DESC;
-    --3. С сортировкой по двум атрибутам + ограничение вывода количества записей
+    --3. Г‘ Г±Г®Г°ГІГЁГ°Г®ГўГЄГ®Г© ГЇГ® Г¤ГўГіГ¬ Г ГІГ°ГЁГЎГіГІГ Г¬ + Г®ГЈГ°Г Г­ГЁГ·ГҐГ­ГЁГҐ ГўГ»ГўГ®Г¤Г  ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ  Г§Г ГЇГЁГ±ГҐГ©
 		SELECT TOP 5 * FROM client
 		ORDER BY last_name, first_name;
-    --4. С сортировкой по первому атрибуту, из списка извлекаемых
+    --4. Г‘ Г±Г®Г°ГІГЁГ°Г®ГўГЄГ®Г© ГЇГ® ГЇГҐГ°ГўГ®Г¬Гі Г ГІГ°ГЁГЎГіГІГі, ГЁГ§ Г±ГЇГЁГ±ГЄГ  ГЁГ§ГўГ«ГҐГЄГ ГҐГ¬Г»Гµ
 		SELECT CONCAT(last_name, ' ', first_name) AS full_name, phone_number
 		FROM hairdresser
 		ORDER BY 1;
 
---6. Работа с датами. Необходимо, чтобы одна из таблиц содержала атрибут с типом DATETIME.
-    --1. WHERE по дате
+--6. ГђГ ГЎГ®ГІГ  Г± Г¤Г ГІГ Г¬ГЁ. ГЌГҐГ®ГЎГµГ®Г¤ГЁГ¬Г®, Г·ГІГ®ГЎГ» Г®Г¤Г­Г  ГЁГ§ ГІГ ГЎГ«ГЁГ¶ Г±Г®Г¤ГҐГ°Г¦Г Г«Г  Г ГІГ°ГЁГЎГіГІ Г± ГІГЁГЇГ®Г¬ DATETIME.
+    --1. WHERE ГЇГ® Г¤Г ГІГҐ
 		SELECT * FROM done WHERE date = '2019-08-27';
-    --2. Извлечь из таблицы не всю дату, а только год. Например, год рождения автора.
+    --2. Г€Г§ГўГ«ГҐГ·Гј ГЁГ§ ГІГ ГЎГ«ГЁГ¶Г» Г­ГҐ ГўГ±Гѕ Г¤Г ГІГі, Г  ГІГ®Г«ГјГЄГ® ГЈГ®Г¤. ГЌГ ГЇГ°ГЁГ¬ГҐГ°, ГЈГ®Г¤ Г°Г®Г¦Г¤ГҐГ­ГЁГї Г ГўГІГ®Г°Г .
 		SELECT id_hairdresser, YEAR(birth_date) AS year FROM hairdresser;
 
---7. SELECT GROUP BY с функциями агрегации
+--7. SELECT GROUP BY Г± ГґГіГ­ГЄГ¶ГЁГїГ¬ГЁ Г ГЈГ°ГҐГЈГ Г¶ГЁГЁ
     --1. MIN
 		SELECT name, MIN(cost) AS cheapest_service
 		FROM service GROUP BY name;
@@ -73,66 +73,65 @@
 		SELECT name, MAX(cost) AS most_expensive_service
 		FROM service GROUP BY name;
     --3. AVG
-		--сколько в среднем платил каждый клиент
+		--Г±ГЄГ®Г«ГјГЄГ® Гў Г±Г°ГҐГ¤Г­ГҐГ¬ ГЇГ«Г ГІГЁГ« ГЄГ Г¦Г¤Г»Г© ГЄГ«ГЁГҐГ­ГІ
 		SELECT id_client, AVG(total_cost) AS average_payment
 		FROM done GROUP BY id_client;
     --4. SUM
-		--суммарный доход от каждой услуги
+		--Г±ГіГ¬Г¬Г Г°Г­Г»Г© Г¤Г®ГµГ®Г¤ Г®ГІ ГЄГ Г¦Г¤Г®Г© ГіГ±Г«ГіГЈГЁ
 		SELECT id_service, SUM(total_cost) AS service_revenue
 		FROM done GROUP BY id_service;
     --5. COUNT
-		--сколько визитов нанёс каждый клиент
+		--Г±ГЄГ®Г«ГјГЄГ® ГўГЁГ§ГЁГІГ®Гў Г­Г Г­ВёГ± ГЄГ Г¦Г¤Г»Г© ГЄГ«ГЁГҐГ­ГІ
 		SELECT id_client, COUNT(total_cost) AS visits
 		FROM done GROUP BY id_client;
 
 --8. SELECT GROUP BY + HAVING
-    --1. Написать 3 разных запроса с использованием GROUP BY + HAVING
-		--услуги, доход от которых превысил 500.00
+    --1. ГЌГ ГЇГЁГ±Г ГІГј 3 Г°Г Г§Г­Г»Гµ Г§Г ГЇГ°Г®Г±Г  Г± ГЁГ±ГЇГ®Г«ГјГ§Г®ГўГ Г­ГЁГҐГ¬ GROUP BY + HAVING
+		--ГіГ±Г«ГіГЈГЁ, Г¤Г®ГµГ®Г¤ Г®ГІ ГЄГ®ГІГ®Г°Г»Гµ ГЇГ°ГҐГўГ»Г±ГЁГ« 500.00
 		SELECT id_service, SUM(total_cost) AS service_revenue FROM done
 		GROUP BY id_service
 		HAVING SUM(total_cost) > 500.00;
 
-		--парикмахеры, у которых цена самой дешёвой услуги = 200.00
+		--ГЇГ Г°ГЁГЄГ¬Г ГµГҐГ°Г», Гі ГЄГ®ГІГ®Г°Г»Гµ Г¶ГҐГ­Г  Г±Г Г¬Г®Г© Г¤ГҐГёВёГўГ®Г© ГіГ±Г«ГіГЈГЁ = 200.00
 		SELECT name, MIN(cost) AS cheapest_cost FROM service
 		GROUP BY name
 		HAVING MIN(cost) = 200.00;
 
-		--фамилии клиентов, встречающиеся среди них более 1 раза (однофамильцы)
+		--ГґГ Г¬ГЁГ«ГЁГЁ ГЄГ«ГЁГҐГ­ГІГ®Гў, ГўГ±ГІГ°ГҐГ·Г ГѕГ№ГЁГҐГ±Гї Г±Г°ГҐГ¤ГЁ Г­ГЁГµ ГЎГ®Г«ГҐГҐ 1 Г°Г Г§Г  (Г®Г¤Г­Г®ГґГ Г¬ГЁГ«ГјГ¶Г»)
 		SELECT last_name, COUNT(last_name) AS clients_with_same_last_name FROM client
 		GROUP BY last_name
 		HAVING COUNT(last_name) > 1;
 
 --9. SELECT JOIN
-    --1. LEFT JOIN двух таблиц и WHERE по одному из атрибутов
+    --1. LEFT JOIN Г¤ГўГіГµ ГІГ ГЎГ«ГЁГ¶ ГЁ WHERE ГЇГ® Г®Г¤Г­Г®Г¬Гі ГЁГ§ Г ГІГ°ГЁГЎГіГІГ®Гў
 		SELECT * FROM done
 		LEFT JOIN service ON done.id_service = service.id_service
 		WHERE total_cost > 200.0;
-    --2. RIGHT JOIN. Получить такую же выборку, как и в 9.1
+    --2. RIGHT JOIN. ГЏГ®Г«ГіГ·ГЁГІГј ГІГ ГЄГіГѕ Г¦ГҐ ГўГ»ГЎГ®Г°ГЄГі, ГЄГ ГЄ ГЁ Гў 9.1
 		SELECT * FROM service
 		RIGHT JOIN done ON done.id_service = service.id_service
 		WHERE total_cost > 200.0;
-    --3. LEFT JOIN трех таблиц + WHERE по атрибуту из каждой таблицы
+    --3. LEFT JOIN ГІГ°ГҐГµ ГІГ ГЎГ«ГЁГ¶ + WHERE ГЇГ® Г ГІГ°ГЁГЎГіГІГі ГЁГ§ ГЄГ Г¦Г¤Г®Г© ГІГ ГЎГ«ГЁГ¶Г»
 		SELECT * FROM done
 		LEFT JOIN service ON service.id_service = done.id_service
 		LEFT JOIN client ON client.id_client = done.id_client
 		WHERE done.total_cost > 300 AND service.materials IS NOT NULL AND client.regular_customer = 1;
-
-    --4. FULL OUTER JOIN двух таблиц
-		--салоны и парикмахеры
+    --4. FULL OUTER JOIN Г¤ГўГіГµ ГІГ ГЎГ«ГЁГ¶
+		--Г±Г Г«Г®Г­Г» ГЁ ГЇГ Г°ГЁГЄГ¬Г ГµГҐГ°Г»
 		SELECT * FROM salon
 		FULL OUTER JOIN hairdresser ON salon.id_salon = hairdresser.id_salon;
 
---10. Подзапросы
-    --1. Написать запрос с WHERE IN (подзапрос)
-		--услуги, которыми люди воспользовались более одного раза
+--10. ГЏГ®Г¤Г§Г ГЇГ°Г®Г±Г»
+    --1. ГЌГ ГЇГЁГ±Г ГІГј Г§Г ГЇГ°Г®Г± Г± WHERE IN (ГЇГ®Г¤Г§Г ГЇГ°Г®Г±)
+		--ГіГ±Г«ГіГЈГЁ, ГЄГ®ГІГ®Г°Г»Г¬ГЁ Г«ГѕГ¤ГЁ ГўГ®Г±ГЇГ®Г«ГјГ§Г®ГўГ Г«ГЁГ±Гј ГЎГ®Г«ГҐГҐ Г®Г¤Г­Г®ГЈГ® Г°Г Г§Г 
 		SELECT * FROM service
 		WHERE id_service IN (
 			SELECT id_service FROM done
 			GROUP BY id_service
 			HAVING COUNT(*) > 1
 		)
-    --2. Написать запрос SELECT atr1, atr2, (подзапрос) FROM ...
-		--имена, телефоны и адреса работы парикмахеров
+    --2. ГЌГ ГЇГЁГ±Г ГІГј Г§Г ГЇГ°Г®Г± SELECT atr1, atr2, (ГЇГ®Г¤Г§Г ГЇГ°Г®Г±) FROM ...
+		--ГЁГ¬ГҐГ­Г , ГІГҐГ«ГҐГґГ®Г­Г» ГЁ Г Г¤Г°ГҐГ±Г  Г°Г ГЎГ®ГІГ» ГЇГ Г°ГЁГЄГ¬Г ГµГҐГ°Г®Гў
 		SELECT
 			CONCAT(first_name, ' ', last_name) AS full_name,
 			phone_number,
